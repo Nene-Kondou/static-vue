@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <style>
+        .red {
+            font-size: 32pt;
+            font-weight: plain;
+            font-style: normal;
+            color: red;
+        }
+        .blue {
+            font-size: 24pt;
+            font-weight: bold;
+            font-style: italic;
+            color: blue;
+        }
+        .ok {
+            font-size: 24pt;
+            color: blue;
+            padding: 5px 20px;
+            border: 2px solid red;
+        }
+        .ng {
+            font-size: 20pt;
+            color: gray;
+        }
+    </style>
+    <div id="app" class="container">
+        <p class="h1 mt-5">2-3 v属性を活用</p>
+        <!--------------------------------
+            2-3 v属性を活用
+        -------------------------------->
+        <!-- ①テキストサイズを操作 -->
+        <!-- <h2 class="bg-secondary text-white display-4 px-3">Vue3</h2>
+        <p v-bind:style="style">{{ message }}</p> -->
+
+        <h1 class="bg-secondary text-white display-4 px-3">Vue3</h1>
+        <div id="app" class="container">
+            
+            <!-- ②オブジェクト構文 -->
+            <!-- <p v-bind:class="classes">
+                {{ message }}
+            </p> -->
+
+            <!-- ③スタイルとオブジェクト構文 -->
+            <!-- <p v-bind:style="{fontSize:'20pt', color:'red', border:'2px solid cyan'}">
+                {{ message }}
+            </p> -->
+            <!-- <p v-bind:style="styles">
+                {{ message }}
+            </p> -->
+
+            <!-- ④v-ifによる条件付きレンダリング -->
+            <!-- <p v-if="flag" class="ok">
+                {{ message }}
+            </p>
+            <p v-else class="ng">
+                ※現在、問題が発生中です。。。
+            </p> -->
+
+            <!-- ⑤複雑な表示は<template>タグ -->
+            <!-- <template  v-if="flag">
+                <p>データをテーブル表示する</p>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr><th>Name</th><th>mail</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Taro</td><td>taro@yamada</td></tr>
+                        <tr><td>hanako</td><td>hanako@yamada</td></tr>
+                        <tr><td>sachiko</td><td>sachiko@yamada</td></tr>
+                    </tbody>
+                </table>
+            </template>
+            <template  v-else>
+                <p>※データをリスト表示する</p>
+                <ul class="list-group">
+                    <li class="list-group-item">Taroのアドレスは、taro@yamadaです。</li>
+                    <li class="list-group-item">hanakoのアドレスは、hanako@yamadaです。</li>
+                    <li class="list-group-item">sachikoのアドレスは、sachiko@yamadaです。</li>
+                </ul>
+            </template> -->
+
+            <!-- ⑥v-forによるリストレンダリング -->
+            <!-- <p>{{ message }}</p> -->
+            <!-- <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>mail</th>
+                        <th>tel</th>
+                    </tr>
+                </thead>
+                <tr v-for="item in items">
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.mail }}</td>
+                    <td>{{ item.tel }}</td>
+                </tr>
+            </table> -->
+            <!-- ⑦インデックス番号の取得  -->
+            <!-- <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>mail</th>
+                        <th>tel</th>
+                    </tr>
+                </thead>
+                <tr v-for="( item, id ) in items">
+                    <td>{{ id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.mail }}</td>
+                    <td>{{ item.tel }}</td>
+                </tr>
+            </table> -->
+            
+            <!-- ⑧オブジェクトをv-forする場合 -->
+            <!-- <p>{{ message }}</p>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>mail</th>
+                        <th>tel</th>
+                    </tr>
+                </thead>
+                <tr v-for="( item, key ) in items">
+                    <td>{{ key }}</td>
+                    <td>{{ item.mail }}</td>
+                    <td>{{ item.tel }}</td>
+                </tr>
+            </table> -->
+            <!-- ⑨v-forとv-ifを組み合わせる -->
+            <p>{{ message }}</p>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>mail</th>
+                        <th>tel</th>
+                    </tr>
+                </thead>
+                <template v-for="( item, index ) in items">
+                    <template v-if="index % 2 == 0">
+                        <tr>
+                            <td>{{ index }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.mail }}</td>
+                            <td>{{ item.tel }}</td>
+                        </tr>
+                    </template>
+                    <template v-else>
+                        <tr>
+                            <td>***</td>
+                            <td>*** 非公開 ***</td>
+                            <td>*** 非公開 ***</td>
+                            <td>*** 非公開 ***</td>
+                        </tr>
+                    </template>
+                </template>
+            </table>
+
+        </div>
+
+
+
+    </div>
+    <hr>
+
+    <script>
+        var classObj = {
+            red: true,
+            blue: false
+        }
+        const appdata = {
+            // ①
+            // data() {
+                //     return {
+                    //         message: null,
+                    //         style: 'font-size:32pt; color:red;'
+                    //     }
+                    // },
+                    // mounted() {
+            //     this.message = 'This is sample page.'
+            // }
+            // mounted() {
+            //     // this.message = 'This is sample page.'
+            //     setInterval( () => {
+            //         this.classes.red = !classObj.red
+            //         this.classes.blue = !classObj.blue
+            //     }, 1000 )
+            // },
+
+            // ②
+            // data() {
+            //     return {
+            //         message: "This is sample page",
+            //         // classes: classObj
+            //         styles: {
+            //             margin: '10px',
+            //             padding: '5px 20px',
+            //             fontSize: '20pt',
+            //             color: 'red',
+            //             backgroundColor: '#fee',
+            //             border: '3px solid blue'
+            //         }
+            //     }
+            // },
+            // ④
+            // data() {
+            //     return {
+            //         message: "This is sample page",
+            //         flag: true
+            //     }
+            // },
+            // mounted() {
+            //     setInterval( () => {
+            //         this.flag = !this.flag
+            //     }, 10000)
+            // }
+            // ⑤
+            // data() {
+            //     return {
+            //         flag: true,
+            //     }
+            // },
+            // mounted() {
+            //     setInterval( () => {
+            //         this.flag = !this.flag
+            //     }, 10000)
+            // }
+
+            // ⑥⑦⑨
+            data() {
+                return {
+                    message: '※データをテーブル表示する',
+                    items: [
+                        { name:'Taro', mail:'taro@yamada', tel:'999-999' },
+                        { name:'hanako', mail:'hanako@hanako', tel:'888-888' },
+                        { name:'sachiko', mail:'sachiko@sachiko', tel:'777-777' },
+                        { name:'jiro', mail:'jiro@jiro', tel:'222-222' },
+                    ]
+                }
+            }
+            // ⑧
+            // data() {
+            //     return {
+            //         message: '※データをテーブル表示する',
+            //         items: {
+            //             Taro: { mail:'taro@taro', tel:'999-999' },
+            //             Yamada: { mail:'yamada@yamada', tel:'888-888' },
+            //             Sachico: { mail:'sachico@sachico', tel:'888-888' },
+            //             Jiro: { mail:'jiro@jiro', tel:'777-777' },
+            //         }
+            //     }
+            // }
+            
+        }
+        let app = Vue.createApp(appdata)
+        app.mount('#app')
+    </script>
+</body>
+</html>
