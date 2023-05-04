@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンポーネント</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <h1 class="bg-secondary text-white display-4 px-3">Vue3</h1>
+    <div id="app" class="container">
+        <!--------------------------------
+            3-2 v属性を使いこなす
+        -------------------------------->
+        <p>{{ message }}</p>
+
+        <!-- ①v-bindで属性を設定する -->
+        <!-- <hello v-for="item in data" v-bind:name="item" /> v-forでdataから順に取り出したitemが、そのままv-bind:nameの値に設定されている -->
+
+        <!-- ②v-modelで値をバインド　入力された名前でコンポーネントを表示する -->
+        <!-- <div><hello v-bind:name="name" /></div>
+        <div class="form-group">
+            <input type="text" class="form-control" v-model="name">
+        </div> -->
+
+        <!-- ③v-onでイベントをバインドする クリックすると数字をカウント -->
+        <!-- ④イベント処理を別途用意　クリックするとクラスを変更する -->
+        <!-- ⑤イベント処理とmethods コンポーネントに用意した変数を利用してonInputで処理を行う -->
+        <!-- ⑥算術プロパティ…処理を実行できるプロパティ -->
+        <!-- <hello  /> -->
+
+        <!-- ⑦ローカルコンポーネント helloをローカルに設置 -->
+        <div><hello /></div>
+        <div><hello /></div>
+        <div><hello /></div>
+
+
+    </div>
+
+    <script>
+        const appdata = {
+            data() {
+                return {
+                    message: '※コンポーネントを表示する',
+                    // ①
+                    // data: [ 'Taro', 'Hanako', 'Sachiko', 'Jiro' ],
+
+                    // ②③
+                    name: 'no-name'
+                }
+            },
+
+            // ⑦ローカルコンポーネント
+            components: {
+                hello: {
+                    data() {
+                        return {
+                            counter: 0,
+                        }
+                    },
+                    template: `<p v-on:click="counter++" class="alert alert-info h5">clicked: {{ counter }}.`
+                }
+            }
+        }
+
+        let app = Vue.createApp( appdata )
+
+
+
+        // グローバルコンポーネント
+        app.component( 'hello', {
+            // ①
+            // props: { name:String },
+            // data() {
+            //     return {
+            //         message: 'これは新しいメッセージです',
+            //     }
+            // },
+            // template: '<p class="alert alert-primary">Hello, {{ name }}!</p>'
+
+            // ②
+            // props:['name'],
+            // template: '<p class="alert alert-info">Hello, {{ name }}!</p>'
+
+            // ③
+            // data() {
+            //     return {
+            //         counter: 0,
+            //     }
+            // },
+            // template: '<p v-on:click="counter++" class="alert alert-info">clicked: {{ counter }}.</p>'
+
+            // ④
+            // data() {
+            //     return {
+            //         counter: 0,
+            //         isInfo: true,
+            //         isDark: false,
+            //     }
+            // },
+            // methods: {
+            //     doAction() {
+            //         this.counter++;
+            //         console.log("counter");
+            //         if( this.counter % 2 == 0 ) {
+            //             this.isInfo = true
+            //             this.isDark = false
+            //             console.log("true");
+            //         } else {
+            //             this.isInfo = false
+            //             this.isDark = true
+            //             console.log("false");
+            //         }
+            //     },
+            // },
+            // template: '<p v-on:click="doAction" v-bind:class="{\'alert-warning\':isInfo, \'alert-dark\':isDark}" class="alert">clicked: {{ counter }}.</p>'
+
+            // ⑤
+            // data() {
+            //     return {
+            //         num: 0,
+            //         message: 'type a number.'
+            //     }
+            // },
+            // methods: {
+            //     calc() {
+            //         var total = 0
+            //         for ( var i = 1; i <= this.num; i++ ) {
+            //             total += 1;
+            //         }
+            //         this.message = "total: " + total
+            //     }
+            // },
+            // template: `<div>
+            //     <p class="alert alert-info h4">{{ message }}</p>
+            //     <div>
+            //         <input class="form-control" type="number"
+            //         v-on:input="calc" v-model="num">
+            //         </div>
+            //     </div>`
+
+            // ⑥
+            // data() {
+            //     return {
+            //         num: 0,
+            //     }
+            // },
+            // computed: { //算術プロパティ
+            //     calc: function( event ) {
+            //         var total = 0
+            //         for ( var i = 1; i <= this.num; i++ ) {
+            //             total += 1
+            //         }
+            //         return "total: " + total
+            //     }
+            // },
+            // template: `<div>
+            //     <p class="alert alert-info h4">{{ calc }}</p>
+            //     <div>
+            //         <input class="form-control" type="number"
+            //         v-model="num">
+            //         </div>
+            //     </div>`
+        } )
+
+        app.mount('#app')
+    </script>
+</body>
+</html>
