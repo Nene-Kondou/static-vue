@@ -1,0 +1,36 @@
+②親コンポーネントから子コンポーネントへ値を渡す
+　<HelloWorld v-bind:title="message" />
+　HelloWorldのタグにあるtitle属性にmessageをバインドしている
+　promptという関数はテキストを入力するダイアログを表示する。入力されたテキストは戻り値としてinputに代入し(var input = prompt( "new title:" ))、
+　これをthis.messageに設定し更新され、バインドされた<HelloWorld>のtitle属性が変更されHelloWorldのタイトルを更新された。
+　属性の値を通して、親から子へと値を渡せる。
+
+③子コンポーネントから親コンポーネントへ
+this.$emit( イベント, 引数の値 … )
+子コンポーネントに結されている処理から、親コンポーネントに値を渡す場合、「$emit」というメソッドを使う。
+そのコンポーネントが設置されているタグにイベントを送るもの。
+HelloWorld
+　ボタンをクリックでdoActionメソッド呼び出し
+    doAction() {
+      this.message = 'こんにちは、' + this.input + 'さん！'
+      this.$emit( 'result-event', this.input )
+    }
+　メッセージを更新した後、this.$emit呼んでる。result-eventイベントをthis.inputの値付きで呼び出される。
+App
+　<HelloWorld v-bind:title="message" v-on:result-event="appAction" />
+　v-on:でresult-eventイベントにappActionメソッドをバインド。
+
+「$emitでresult-eventを発火→result-eventが発生し、appActionメソッドを呼び出す」
+
+App
+  methods: {
+    appAction( message ) {
+      this.result = '(*** you send:"' + message + '". ***)'
+    }
+  },
+  引数messageには$emitを実行した際に送られたthis.inputが渡り、その値を使いthis.result(子→親コンポーネントの値変更)を変更している
+
+④テンプレート参照 …しかし諸刃の剣
+ref="名前"
+ref属性をつけて記述されたテンプレートのHTML要素は、
+「this.$refs.名前」でHTML要素のオブジェクトにアクセスできる
