@@ -1,0 +1,4 @@
+viteのインストール方法
+npm init vite-app プロジェクト名
+cd プロジェクト名
+npm install
