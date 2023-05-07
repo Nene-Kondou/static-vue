@@ -2,3 +2,97 @@ viteのインストール方法
 npm init vite-app プロジェクト名
 cd プロジェクト名
 npm install
+
+Calc.vueの説明
+1.fomulaのテキストを改行コードで分割し配列にする
+    let arr = this.fomula.trim().split('\n')
+2.配列の最後の項目を変数lastに取り出しておく（配列からは消える）
+    let last = arr.pop()
+3.配列の各要素について繰り返し処理をする
+    for ( let n in arr ) {}
+4.繰り返しでは、取り出した項目のテキストが空でないなら「let テキスト ;」というテキストを作って変数fnに追加する
+    if ( arr[n].trim() != '' ) {
+        fn += 'let ' + arr[n] + ';'
+    }
+5.繰返しが終わったら「return 最後の項目;」とテキストを追加してテキスト完成
+    fn += 'return ' + last + ';'
+6.完成したテキストの前後に「function(){」「} fn();」と付け足す。
+これで取り出した処理のテキストをfという関数にまとめて実行するスクリプトができあがる
+    let exp = 'function f() {' + fn + '} f();'
+7.eval関数を使ってスクリプトのテキストを実行する
+    let ans = eval(exp)
+8.実行結果をメッセージでまとめてmessageに設定
+    this.message = 'answer: ' + ans
+9.配列をセミコロン記号でつなげて1つのテキストにする
+    let re = arr.join(';').trim()
+10.配列が空でなければセミコロンをつけ、最後の項目を付け加える
+    if ( re != '' ) { re += ';' }
+    re += last
+11.作成したテキストを引数に指定し、$emitでresult-eventイベントを呼び出す
+    this.$emit( 'result-event', re, ans )
+
+・入力テキストは関数として実行
+テキストをスクリプトとして実行するにはeval関数を使う
+複数業に渡る計算の場合、jsで正しく実行できるように書いた式全体を関数にまとめ、その関数を実行するようにする。
+テキストの最初に「 function fn() { 」　とつけ、最後に 「 } 」をつければいい。
+そのように書かれたテキストは変数に代入する文の場合は「 let ⚪︎ = XX; 」という形にして、
+最後の計算式は「 return ○; 」という形にすればjsとして実行できるスクリプトになる
+
+App.vueの説明
+titleをmessageの値でバインドしている。
+v-onでresult-eventイベントが発生したら、aoActionメソッドを呼び出すようにしている。
+計算実行結果を表示するのtableタグにv-htmlを使い、logの値を表示するようにしてある。logにテーブルの内容を設定すれば表示される。
+    <div class="mt-3 text-left">
+      <table class="table" v-html="log"></table>
+    </div>
+・用意される値
+　Calcコンポーネントを組み込み、dataにはmessageとresultの2つの値を用意。
+　resultは実行した式と結果を配列にまとめて保管するもの。
+・算出プロパティについて
+　tableにv-htmlで設定してあったlogは、dataに用意されていない。算出プロパティとして用意してある。
+  computed: {
+    log() {
+      let table = '<tr><th>Expression</th><th>Value</th></tr>'
+      if( this.result.length > 0 ) {
+        for ( var i in this.result ) {
+          table += '<tr><td>' + this.result[i][0] + '</td><th>' + this.result[i][1] + '</th></tr>'
+        }
+      }
+      return table
+    }
+  },
+　logはthis.resultの配列から順に値を取り出し、その内容をテーブルのタグの形にまとめて作成。
+　resultは「配列の配列」になっている。
+　実行した式と、その結果の2つの値をまとめた配列を、さらに配列のまとめて設定してある。
+　そのためforを使って配列の要素を順に取り出したら、その取り出した配列から、さらに値を取り出して利用する。
+　forの中で this.result[i][0] としている部分は、「this.resultのi番目の値の配列のゼロ番目の値」をとっている。
+・初期化created
+　コンポーネントのオブジェクトが作成された直後に実行される。
+　propsやdataによる値の設定は行われている。
+  created() {
+    let items = localStorage.getItem( 'log' )
+    let logs = JSON.parse( items )
+    if ( logs != null ) { this.result = logs }
+  },
+・ローカルストレージ
+　localStorageはローカルストレージを利用するためのオブジェクト。getItemは指定の名前の値を取り出すメソッド。
+　変数 = localStorage.getItem( キー )
+　これで指定した名前で保存しておいた値を取り出せる。
+・JSON.parseでオブジェクトに変換
+　取り出したテキストはJSONオブジェクトのparseメソッドでオブジェクトにしている。
+　JSONはJSON形式のデータを扱うための機能を提供するためのもので、parseは引数のテキストをもとにjsのオブジェクトを生成する。
+　つまりローカルストレージから取り出したテキストをもとにjsのオブジェクトを作成した。
+　あとは値がnullでなければthis.resultに設定して完了。
+　this.resultは算出プロパティのlogで使われていて、ここでthis.resultの値を設定すると、算術プロパティのlogが更新されて表示されるテーブルが更新される
+
+覚えること
+・propsとdataは基本
+　propsはコンポーネントのタグで属性として用意する。
+　親コンポーネントから子コンポーネントに値を渡すのにも利用したりする。
+　dataはメソッドのカッチで定義する。
+・v-modelとv-onは重要！
+　v-modelは入力缶毛のタグで利用する。
+　これを使うことで、入力された値をコンポーネントのdataのあたいにバインドすることができた。
+　v-onはイベントの属性を設定する。
+　これを利用することでコンポーネントのmethodsに用意したメソッドをイベントに設定できるようになる。
+　$emitというメソッドを利用して子コンポーネントから欧亜コンポーネントに値を渡すときもv-onによるイベント設定が重要な役割を果たしていた。
