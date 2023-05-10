@@ -47,3 +47,22 @@
         名前( newVal, oldVal ) { ..処理.. },
         名前( newVal, oldVal ) { ..処理.. },
     }
+
+⑥イベントの修飾子　v-XX
+    イベント関係の処理の割り当てはv-onを使って設定する。
+    予めmethodsに関数を用意しておき、v-onで割り当てることで、イベントが発生するとその処理を実行できるようにする。
+    v-on:イベント名.修飾子="〇〇"
+    修飾子
+    .stop ... イベントの伝搬をそこで停止
+    .prevent ... イベントのデフォルトのアクションを停止
+    .capture ... イベントをキャプチャーする（途中で別のイヴェントを発火させたりするのに使う）
+    .self ... 自身がイベントの発生源であるときだけ発火
+    .once ... 連続してイベントが発生するとき一度だけ発火
+    .passive ... scrollイベントでイベントが停止されてもスクロール処理は動くようにする
+    タグが入れ子になっている場合、上のタグ(id="in" e_event)にイベントを設定すると、下のタグにもイベントが伝えられる。
+    <div id="out" class="out" v-on:click="a_event">A
+      <div id="mid" class="mid" v-on:click="b_event">B
+        <div id="in" class="in" v-on:click="c_event">C
+        </div>
+      </div>
+    </div>
