@@ -1,0 +1,60 @@
+トランジション
+    スタイルシートの状態変化を扱うための機能
+    スタイルシート(cssクラス)として設定を用意する
+    <transition name="名前">
+        .. 内容 ..
+    </transition>
+
+①表示をON/OFF
+    Enter
+    ・名前-enter-active
+        Enterトランジションがアクティブになったとき
+    ・名前-enter-from
+        Enterトランジションが開始される時
+    ・名前-enter
+        Enterトランジションがスタートしたとき
+    ・名前-enter-to
+        Enterトランジションが完了した時
+    Leave
+    。名前-leave-active
+        Leaveトランジションがアクティブになったとき
+    。名前-leave-from
+        Leaveトランジションが開始される時
+    。名前-leave
+        Leaveトランジションがスタートしたとき
+    。名前-leave-to
+        Leaveトランジションが完了したとき
+
+②トランジションのイベント
+    <transition>類にv-onなど使って関数にバインドして設定。
+    v-on:before-enter="beforeEnter"とすれば、Enter開始直前にbeforeEnter関数が実行される
+    Enter関係のイベント
+    ・before-enter
+        Enter開始直前
+    ・enter
+        Enter開始
+    ・after-enter
+        Enter終了後
+    ・after-cancelled
+        Enterキャンセル時
+    Leave関係のイベント
+    ・leave-enter
+        Enter開始直前
+    ・leave
+        leave開始
+    ・after-leave
+        leave終了後
+    ・leave-cancelled
+        leaveキャンセル時
+
+③transform
+    タグの位置を移動したり、回転したり拡大縮小したりする。⚪︎⚪︎にどういう形でうご書くかを記述
+    transform: ⚪︎⚪︎ 値
+    transformX 横方向に移動
+    transformY 縦方向に移動
+    scale 縦横等倍に拡大縮小
+    scaleX 横方向に拡大縮小
+    scaleY 縦方向に拡大縮小
+    rotateX X軸を中心に回転
+    rotateY Y軸を中心に回転
+    rotateZ Z軸を中心に回転
